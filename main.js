@@ -1,7 +1,8 @@
-const APIkey = "5290321cd72fde7bc229af09c5895949"
-const gApiKey = 'AIzaSyCIbCZZpXyYli4pp6eIx5GKWFWD5TvApiY'
-let units = 'metric'
-let lastCity = ''
+const APIkey = "5290321cd72fde7bc229af09c5895949";
+const gApiKey = 'AIzaSyCIbCZZpXyYli4pp6eIx5GKWFWD5TvApiY';
+let units = 'metric';
+let lastCity = '';
+let coordinates = {};
 
 const icons = {
   i03d : "fa-solid fa-cloud",
@@ -127,6 +128,8 @@ function formatWindSpeed(speed){
 }
 
 function setDataDomCurrent(weatherData){
+  coordinates = { lat: parseFloat(weatherData.coord.lat) , lng: parseFloat(weatherData.coord.lon) };
+  initMap(coordinates);
   const cityData =  {
   city : weatherData.name,
   climate : weatherData.weather[0].description,
@@ -229,3 +232,18 @@ changeUnits.addEventListener('click',() => {
 })
 
 getUserLocation();
+
+//Add google map with location (using google api)
+// Initialize and add the map
+function initMap(uluru) {
+  // The map, centered at Uluru
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 12,
+    center: uluru,
+  });
+  // The marker, positioned at Uluru
+  const marker = new google.maps.Marker({
+    position: uluru,
+    map: map,
+  });
+}
