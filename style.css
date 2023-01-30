@@ -1,11 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+html{
+    font-size: 20px;
+    text-transform: capitalize;
+}
+
 body {
-    background-image: url(./images/background.png);
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url(./images/background.png);
+    background-size: cover;
     background-repeat: no-repeat;
-    object-fit:cover;
+    background-position: center;
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(226, 226, 226);
+    font-weight: bold;
+    text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
+    min-height: 100vh;
 } 
 
 /* Set the size of the div element that contains the map */
 #map {
-    height: 400px; /* The height is 400 pixels */
-    width: 100%; /* The width is the width of the web page */
+    height: 150px; 
+    width: 200px; 
+    transition: 0.2s;
+    margin-left: auto;
   }
+
+#map:hover{
+    height: 400px;
+    width: 100%;
+}
+
+#topCenter{
+    flex: 1 1 500px;
+}
+
+.top{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5% 2% 5% 2%;
+}
+
+#topLeft{
+    margin-right: auto;
+}
+
+#topLeft *{
+    margin: 3%;
+    flex: 1;
+}
+
+#city{
+    font-size: 2em;
+}
+
+#temperature{
+    font-size: 1.9em;
+}
+
+#changeUnits{
+    font-size: 0.8em;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#cityName {
+    width: 200px;
+    border: 0;
+    border-bottom: 2px solid rgb(226, 226, 226);
+    outline: 0;
+    font-size: 0.8rem;
+    color: rgb(226, 226, 226);
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+#cityName::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(226, 226, 226);
+    opacity: 1; /* Firefox */
+  }
+#cityName:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgb(226, 226, 226);
+  }
+#cityName::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgb(226, 226, 226);
+  }
+
+#topRight *{
+    margin: 1%;
+    align-items: center;
+}
+
+.description {
+    display: flex;
+}
+
+#bottom{
+    display: flex;
+    overflow-x: scroll;
+    margin: 5%;
+}
+
+.card{
+    margin: 2%;
+    min-width: 120px;
+}
+
+.card *{
+    margin: 6%;
+}
+
+/* width */
+::-webkit-scrollbar {
+    height: 5px;
+    cursor: pointer;
+  }
+
+::-webkit-scrollbar:hover {
+height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+cursor: pointer;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+cursor: pointer;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}

@@ -112,9 +112,9 @@ const getWeatherData = async(request, mode = "city") => {
 }
 
 function formatTemperature(temperature){
-  let newTemp = temperature.toFixed(2) + '°C';
+  let newTemp = temperature.toFixed(2) + ' °C';
   if(units==='imperial'){
-    newTemp = temperature.toFixed(2) + '°F'
+    newTemp = temperature.toFixed(2) + ' °F'
   }
   return newTemp
 }
@@ -133,14 +133,19 @@ function setDataDomCurrent(weatherData){
   const cityData =  {
   city : weatherData.name,
   climate : weatherData.weather[0].description,
-  date : new Date (weatherData.dt * 1000).toLocaleDateString("default"),
-  hour : new Date (weatherData.dt * 1000).toLocaleTimeString("default"),
-  sunrise : new Date (weatherData.sys.sunrise * 1000).toLocaleTimeString("default"),
-  sunset : new Date (weatherData.sys.sunset * 1000).toLocaleTimeString("default"),
+  date : new Date (weatherData.dt * 1000).toLocaleDateString("default",
+  { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+  hour : new Date (weatherData.dt * 1000).toLocaleTimeString("default",
+  { hour: '2-digit', minute: '2-digit' }),
+  sunrise : new Date (weatherData.sys.sunrise * 1000).toLocaleTimeString("default",
+  { hour: '2-digit', minute: '2-digit' }),
+  sunset : new Date (weatherData.sys.sunset * 1000).toLocaleTimeString("default",
+  { hour: '2-digit', minute: '2-digit' }),
   temperature : formatTemperature(weatherData.main.temp),
   tempFeeling : formatTemperature(weatherData.main.feels_like),
   humidity : weatherData.main.humidity,
   windSpeed : formatWindSpeed(weatherData.wind.speed),
+  icon : "i" + weatherData.weather[0].icon.replace('n','d')
   }
 
   document.getElementById('city').textContent = cityData.city;
@@ -152,6 +157,7 @@ function setDataDomCurrent(weatherData){
   document.getElementById('humidity').textContent = cityData.humidity + '%';
   document.getElementById('sunTimes').textContent = 'Sunrise: '+cityData.sunrise+'\r\n'+'Sunset: '+cityData.sunset;
   document.getElementById('windSpeed').textContent = cityData.windSpeed
+  document.getElementById('weatherIcon').setAttribute('class', iconClass(cityData.icon) + " fa-4x");
 
 }
 
@@ -182,9 +188,6 @@ function setDataDomForecast(forecastData){
   function createCard(data , number){
     const card = document.createElement('div');
     card.setAttribute('class',`card ${number}`);
-    if (number > 3){
-      card.setAttribute('style','display: none');
-    }
     const hour = document.createElement('div');
     hour.setAttribute('class','hour');
     hour.textContent = data.hour;
@@ -192,13 +195,14 @@ function setDataDomForecast(forecastData){
     temperature.setAttribute('class','temperature');
     temperature.textContent = data.temperature;
     const icon = document.createElement('i');
-    icon.setAttribute('class', iconClass(data.icon));
+    icon.setAttribute('class', iconClass(data.icon) + " fa-2x");
     card.append(hour , temperature , icon)
     bottom.appendChild(card);
   }
   for (let i = 0 ; i < 8 ; i++){
     const hourData = {
-      hour: new Date (forecastData[i].dt*1000).toLocaleTimeString("default"),
+      hour: new Date (forecastData[i].dt*1000).toLocaleTimeString("default",
+      { hour: '2-digit', minute: '2-digit' }),
       temperature : formatTemperature(forecastData[i].main.temp),
       weather : forecastData[i].weather[0].main,
       icon : 'i'+forecastData[i].weather[0].icon.replace('n','d'),
@@ -223,6 +227,12 @@ searchButton.addEventListener('click',() => {
   getClimate([cityName]);
 })
 
+document.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    searchButton.click();
+  }
+});
+
 const changeUnits = document.getElementById('changeUnits');
 changeUnits.addEventListener('click',() => {
   units = (units === 'metric') ? 'imperial' : 'metric';
@@ -240,6 +250,86 @@ function initMap(uluru) {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: uluru,
+    styles: [
+      { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+      { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+      { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+      {
+        featureType: "administrative.locality",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }],
+      },
+      {
+        featureType: "poi",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }],
+      },
+      {
+        featureType: "poi.park",
+        elementType: "geometry",
+        stylers: [{ color: "#263c3f" }],
+      },
+      {
+        featureType: "poi.park",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#6b9a76" }],
+      },
+      {
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [{ color: "#38414e" }],
+      },
+      {
+        featureType: "road",
+        elementType: "geometry.stroke",
+        stylers: [{ color: "#212a37" }],
+      },
+      {
+        featureType: "road",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#9ca5b3" }],
+      },
+      {
+        featureType: "road.highway",
+        elementType: "geometry",
+        stylers: [{ color: "#746855" }],
+      },
+      {
+        featureType: "road.highway",
+        elementType: "geometry.stroke",
+        stylers: [{ color: "#1f2835" }],
+      },
+      {
+        featureType: "road.highway",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#f3d19c" }],
+      },
+      {
+        featureType: "transit",
+        elementType: "geometry",
+        stylers: [{ color: "#2f3948" }],
+      },
+      {
+        featureType: "transit.station",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#d59563" }],
+      },
+      {
+        featureType: "water",
+        elementType: "geometry",
+        stylers: [{ color: "#17263c" }],
+      },
+      {
+        featureType: "water",
+        elementType: "labels.text.fill",
+        stylers: [{ color: "#515c6d" }],
+      },
+      {
+        featureType: "water",
+        elementType: "labels.text.stroke",
+        stylers: [{ color: "#17263c" }],
+      },
+    ],
   });
   // The marker, positioned at Uluru
   const marker = new google.maps.Marker({

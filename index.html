@@ -4,50 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>The weather</title>
     <link rel="stylesheet" href="./style.css">
     <script src="https://kit.fontawesome.com/9f0d8d550d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div id="topLeft">
-        <div id="city">--</div>
-        <div id="climate">--</div>
-        <div id="date">--</div>
-        <div id="hour">--</div>
-        <div id="temperature">--</div>
-        <button id="changeUnits">Use imperial system</button>
-        <img src="" alt="" id="weatherIcon">
-        <input type="text" id="cityName" placeholder="Your city here">
-        <button id="search">search</button>
-    </div>
-    <div id="topRight">
-        <div id="map"></div>
-        <div id="description">
-            <img src="" alt="" id="thermometerIcon">
-            <div class="information">
-                <div class="title">Feels like</div>
-                <div id="feelsTemperature">--°C</div>
-            </div>
+    <div class="top">
+        <div id="topLeft">
+            <div id="city">--</div>
+            <div id="climate">--</div>
+            <div id="date">--</div>
+            <div id="hour">--</div>
+            <div id="temperature">--</div>
+            <div id="changeUnits">Use imperial system</div>
+            <i id="weatherIcon"></i>
+            <input type="text" id="cityName" placeholder="Your city here">
+            <i class="fa-solid fa-magnifying-glass" id="search" style="cursor: pointer;"></i>
         </div>
-        <div id="description">
-            <img src="" alt="" id="humidityIcon">
-            <div class="information">
-                <div class="title">Humidity</div>
-                <div id="humidity">--</div>
+        <div id="topCenter"><div id="map"></div></div>
+        <div id="topRight">
+            <div class="description">
+                <i class="fa-solid fa-temperature-low fa-2x"></i>
+                <div class="information">
+                    <div class="title">Feels like</div>
+                    <div id="feelsTemperature">--°C</div>
+                </div>
             </div>
-        </div>
-        <div id="description">
-            <img src="" alt="" id="sunTimesIcon">
-            <div class="information">
-                <div class="title">Sunrise and Sunset</div>
-                <div id="sunTimes">--</div>
+            <div class="description">
+                <i class="fa-solid fa-bars-staggered fa-2x"></i>
+                <div class="information">
+                    <div class="title">Humidity</div>
+                    <div id="humidity">--</div>
+                </div>
             </div>
-        </div>
-        <div id="description">
-            <img src="" alt="" id="windIcon">
-            <div class="information">
-                <div class="title">Wind speed</div>
-                <div id="windSpeed">--</div>
+            <div class="description">
+                <i class="fa-solid fa-mountain-sun fa-2x"></i>
+                <div class="information">
+                    <div class="title">Sunrise and Sunset</div>
+                    <div id="sunTimes" style="white-space: pre-line">--</div>
+                </div>
+            </div>
+            <div class="description">
+                <i class="fa-solid fa-wind fa-2x"></i>
+                <div class="information">
+                    <div class="title">Wind speed</div>
+                    <div id="windSpeed">--</div>
+                </div>
             </div>
         </div>
     </div>
